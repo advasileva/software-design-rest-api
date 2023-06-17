@@ -30,7 +30,7 @@ func (h *getGradesHandler) Handle(ctx echo.Context) error {
 	var request getGradesRequest
 	err := ctx.Bind(&request)
 	if err != nil {
-		return fmt.Errorf("cannot bind request: %v", err)
+		return ctx.JSON(http.StatusUnprocessableEntity, getGradesResponse{})
 	}
 
 	id, err := strconv.ParseInt(ctx.Param("studentId"), 10, 64)

@@ -32,7 +32,7 @@ func (h *postStudentsHandler) Handle(ctx echo.Context) error {
 	var request postStudentsRequest
 	err := ctx.Bind(&request)
 	if err != nil {
-		return fmt.Errorf("cannot bind request: %v", err)
+		return ctx.JSON(http.StatusUnprocessableEntity, getGradesResponse{})
 	}
 
 	student := models.Student{
