@@ -72,11 +72,29 @@ func (r *repository) AddStudent(model models.Student) error {
 	return nil
 }
 
-func (r *repository) AddGrade(model models.Student) error {
-	dto := &student{
-		Name:       model.Name,
-		Age:        model.Age,
-		Profession: model.Profession,
+func (r *repository) GetGrades(id int64) ([]models.Grade, error) {
+	dto := &[]grade{}
+	err := r.db.Model(dto).Where("student_id = ?", id).Select()
+	if err != nil {
+		return []models.Grade{}, fmt.Errorf("cannot get rowS: %v", err)
+	}
+
+	grades := make([]models.Grade, 0, len(*dto))
+	for _, dtoGrade := range *dto {
+		grades = append(grades, models.Grade{
+			Subject: dtoGrade.Subject,
+			Grade:   dtoGrade.Grade,
+		})
+	}
+
+	return grades, nil
+}
+
+func (r *repository) AddGrade(studentId int64, subject string, value int64) error {
+	dto := &grade{
+		StudentId: studentId,
+		Subject:   subject,
+		Grade:     value,
 	}
 
 	_, err := r.db.Model(dto).Insert()

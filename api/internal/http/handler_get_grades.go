@@ -4,18 +4,16 @@ import (
 	"fmt"
 	"net/http"
 	"server/internal/models"
+	"strconv"
 
 	"github.com/labstack/echo/v4"
 )
 
-type getGradesRequest struct {
-	Name       string `json:"name"`
-	Age        int64  `json:"age"`
-	Profession string `json:"profession"`
-}
+type getGradesRequest struct{}
 
 type getGradesResponse struct {
-	Error string `json:"error,omitempty"`
+	Grades []models.Grade `json:"grades"`
+	Error  string         `json:"error,omitempty"`
 }
 
 func newGetGradesHandler(studentsRepository studentsRepository) *getGradesHandler {
@@ -35,16 +33,14 @@ func (h *getGradesHandler) Handle(ctx echo.Context) error {
 		return fmt.Errorf("cannot bind request: %v", err)
 	}
 
-	student := models.Student{
-		Name:       request.Name,
-		Age:        request.Age,
-		Profession: request.Profession,
+	id, err := strconv.ParseInt(ctx.Param("studentId"), 10, 64)
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, getGradesResponse{Error: "cannot parse studentId"})
 	}
-
-	err = h.studentsRepository.AddStudent(student)
+	grades, err := h.studentsRepository.GetGrades(id)
 	if err != nil {
 		return err
 	}
 
-	return ctx.JSON(http.StatusOK, getGradesResponse{})
+	return ctx.JSON(http.StatusOK, getGradesResponse{Grades: grades})
 }

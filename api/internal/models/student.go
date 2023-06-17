@@ -5,3 +5,8 @@ type Student struct {
 	Age        int64  `json:"age"`
 	Profession string `json:"profession"`
 }
+
+type Grade struct {
+	Subject string `json:"subject"`
+	Grade   int64  `json:"grade"`
+}

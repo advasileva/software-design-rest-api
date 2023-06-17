@@ -2,16 +2,14 @@ package http
 
 import (
 	"fmt"
-	"net/http"
-	"server/internal/models"
-
 	"github.com/labstack/echo/v4"
+	"net/http"
 )
 
 type postGradesRequest struct {
-	Name       string `json:"name"`
-	Age        int64  `json:"age"`
-	Profession string `json:"profession"`
+	StudentId int64  `json:"student_id"`
+	Subject   string `json:"subject"`
+	Grade     int64  `json:"grade"`
 }
 
 type postGradesResponse struct {
@@ -35,13 +33,7 @@ func (h *postGradesHandler) Handle(ctx echo.Context) error {
 		return fmt.Errorf("cannot bind request: %v", err)
 	}
 
-	student := models.Student{
-		Name:       request.Name,
-		Age:        request.Age,
-		Profession: request.Profession,
-	}
-
-	err = h.studentsRepository.AddStudent(student)
+	err = h.studentsRepository.AddGrade(request.StudentId, request.Subject, request.Grade)
 	if err != nil {
 		return err
 	}
