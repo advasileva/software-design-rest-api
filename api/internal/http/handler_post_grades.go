@@ -35,7 +35,7 @@ func (h *postGradesHandler) Handle(ctx echo.Context) error {
 
 	err = h.studentsRepository.AddGrade(request.StudentId, request.Subject, request.Grade)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot add grade: %v", err)
 	}
 
 	return ctx.JSON(http.StatusOK, postGradesResponse{})

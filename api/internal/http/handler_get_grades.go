@@ -39,7 +39,7 @@ func (h *getGradesHandler) Handle(ctx echo.Context) error {
 	}
 	grades, err := h.studentsRepository.GetGrades(id)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot get grades: %v", err)
 	}
 
 	return ctx.JSON(http.StatusOK, getGradesResponse{Grades: grades})

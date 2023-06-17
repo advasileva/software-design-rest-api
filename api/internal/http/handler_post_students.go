@@ -43,7 +43,7 @@ func (h *postStudentsHandler) Handle(ctx echo.Context) error {
 
 	err = h.studentsRepository.AddStudent(student)
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot add student: %v", err)
 	}
 
 	return ctx.JSON(http.StatusOK, postStudentsResponse{})

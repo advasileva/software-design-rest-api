@@ -34,7 +34,7 @@ func (h *getStudentsHandler) Handle(ctx echo.Context) error {
 
 	students, err := h.studentsRepository.GetStudents()
 	if err != nil {
-		return err
+		return fmt.Errorf("cannot get students: %v", err)
 	}
 
 	return ctx.JSON(http.StatusOK, getStudentsResponse{
