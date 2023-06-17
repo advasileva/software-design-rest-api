@@ -1,7 +1,9 @@
 {
 	"info": {
+		"_postman_id": "217a0ef3-0952-49b9-a636-c0f70ff17623",
 		"name": "rest-api",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18980218"
 	},
 	"item": [
 		{
@@ -57,7 +59,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8081/grades/0",
+					"raw": "http://localhost:8081/grades/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -65,7 +67,7 @@
 					"port": "8081",
 					"path": [
 						"grades",
-						"0"
+						"1"
 					]
 				}
 			},
